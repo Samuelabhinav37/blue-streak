@@ -31,7 +31,7 @@ export default function Sidebar() {
           <Zap size={14} className="text-white" />
         </div>
         <span className="font-semibold text-white text-sm tracking-wide">
-          CleanSweep
+          Blue Streak
         </span>
       </div>
 

@@ -12,16 +12,16 @@ fn action_to_str(action: &TaskAction) -> &'static str {
 
 fn task_description(action: &TaskAction) -> String {
     match action {
-        TaskAction::ScanAndClean => "CleanSweep: Scan and clean junk files".to_string(),
-        TaskAction::RunRules => "CleanSweep: Run organizer rules".to_string(),
-        TaskAction::EmptyRecycleBin => "CleanSweep: Empty Recycle Bin".to_string(),
+        TaskAction::ScanAndClean => "Blue Streak: Scan and clean junk files".to_string(),
+        TaskAction::RunRules => "Blue Streak: Run organizer rules".to_string(),
+        TaskAction::EmptyRecycleBin => "Blue Streak: Empty Recycle Bin".to_string(),
     }
 }
 
 fn action_run_command(action: &TaskAction) -> String {
     let exe = std::env::current_exe()
         .map(|p| p.to_string_lossy().to_string())
-        .unwrap_or_else(|_| "cleansweep.exe".to_string());
+        .unwrap_or_else(|_| "blue-streak.exe".to_string());
     let sub = action_to_str(action).to_lowercase();
     format!("\"{}\" --headless --action {}", exe, sub)
 }
@@ -29,7 +29,7 @@ fn action_run_command(action: &TaskAction) -> String {
 /// Create a scheduled task via schtasks.exe
 #[tauri::command]
 pub fn create_scheduled_task(task: ScheduledTask) -> Result<(), String> {
-    let task_name = format!("CleanSweep_{}", task.name.replace(' ', "_"));
+    let task_name = format!("BlueStreak_{}", task.name.replace(' ', "_"));
     let run_cmd = action_run_command(&task.action);
     let description = task_description(&task.action);
 
@@ -82,7 +82,7 @@ pub fn create_scheduled_task(task: ScheduledTask) -> Result<(), String> {
     Ok(())
 }
 
-/// List CleanSweep tasks from Windows Task Scheduler
+/// List Blue Streak tasks from Windows Task Scheduler
 #[tauri::command]
 pub fn list_scheduled_tasks() -> Result<Vec<ScheduledTask>, String> {
     let output = Command::new("schtasks")
@@ -98,8 +98,8 @@ pub fn list_scheduled_tasks() -> Result<Vec<ScheduledTask>, String> {
     let mut tasks: Vec<ScheduledTask> = Vec::new();
 
     for line in stdout.lines() {
-        // Only process CleanSweep tasks
-        if !line.contains("CleanSweep_") {
+        // Only process Blue Streak tasks
+        if !line.contains("BlueStreak_") {
             continue;
         }
 
@@ -111,7 +111,7 @@ pub fn list_scheduled_tasks() -> Result<Vec<ScheduledTask>, String> {
 
         let raw_name = fields[0].trim_matches('"');
         let name = raw_name
-            .trim_start_matches(r"\CleanSweep_")
+            .trim_start_matches(r"\BlueStreak_")
             .replace('_', " ");
         let next_run = fields[1].trim_matches('"').to_string();
         let status = fields[2].trim_matches('"').to_string();
@@ -144,7 +144,7 @@ pub fn list_scheduled_tasks() -> Result<Vec<ScheduledTask>, String> {
 /// Delete a scheduled task by name
 #[tauri::command]
 pub fn delete_scheduled_task(name: String) -> Result<(), String> {
-    let task_name = format!("CleanSweep_{}", name.replace(' ', "_"));
+    let task_name = format!("BlueStreak_{}", name.replace(' ', "_"));
 
     let output = Command::new("schtasks")
         .args(["/Delete", "/F", "/TN", &task_name])

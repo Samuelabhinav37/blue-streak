@@ -1,4 +1,4 @@
-# CleanSweep — Phase 5 Master Plan
+﻿# Blue Streak — Phase 5 Master Plan
 ## "Blueprint First" Re-Architecture
 
 > Synthesizes all research (RESEARCH_WIZTREE2.md, RESEARCH_PHASE5_ARCH.md,
@@ -16,7 +16,7 @@ so every feature (DiskMap, duplicates, treemap) re-walks the entire drive indepe
 
 ## What WizTree Does That We Don't
 
-| WizTree | CleanSweep Today | Gap |
+| WizTree | Blue Streak Today | Gap |
 |---|---|---|
 | Read $MFT **once** into RAM | ✅ MFT scan exists (`mft.rs`) | Data not shared |
 | Keep flat array in memory | ❌ Array discarded after scan | No shared state |
@@ -37,7 +37,7 @@ so every feature (DiskMap, duplicates, treemap) re-walks the entire drive indepe
 ```rust
 fn read_mft_to_temp(drive: &str) -> Result<PathBuf, String> {
     let mut src = open_mft(drive)?;   // I/O READ #1
-    let tmp = temp_dir().join("cleansweep_mft.bin");
+    let tmp = temp_dir().join("Blue Streak_mft.bin");
     io::copy(&mut src, &mut dst)?;    // I/O WRITE #2 to disk
     Ok(tmp)
     // MftParser then reads tmp     // I/O READ #3
@@ -195,7 +195,7 @@ On app startup, load snapshot + apply USN delta if available.
 - Files: `src-tauri/src/commands/shared.rs`
 
 **C3. Snapshot persistence (bincode)**
-- After scan, serialize `ScanIndex` to `%LOCALAPPDATA%/cleansweep/scan.bin`
+- After scan, serialize `ScanIndex` to `%LOCALAPPDATA%/Blue Streak/scan.bin`
 - On startup: deserialize + apply USN delta
 - Files: new `src-tauri/src/commands/snapshot.rs`
 

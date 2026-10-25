@@ -1,4 +1,4 @@
-# CleanSweep — Long-Term Engineering Roadmap
+﻿# Blue Streak — Long-Term Engineering Roadmap
 
 > This is the definitive plan for building a world-class, production-grade file organizer.
 > Every phase builds on the previous. Phases are ordered by user impact × engineering leverage.
@@ -140,7 +140,7 @@ For 1M files: ~100× less I/O for duplicate detection compared to current.
 
 **What to build:**
 - New `src-tauri/src/commands/usn.rs` (Windows-only, `#[cfg(target_os = "windows")]`)
-- `get_usn_journal_snapshot(drive)` → saves `last_usn` + `journal_id` to `%LOCALAPPDATA%/cleansweep/usn_state.json`
+- `get_usn_journal_snapshot(drive)` → saves `last_usn` + `journal_id` to `%LOCALAPPDATA%/Blue Streak/usn_state.json`
 - `get_changed_files_since(drive, last_usn)` → returns `Vec<PathBuf>` of changed paths
 - Overflow handler: if `last_usn < LowestValidUsn` → fall back to full walk
 - Wire into `scan_for_junk`: check USN first, only re-hash changed files
@@ -305,7 +305,7 @@ For 1M files: ~100× less I/O for duplicate detection compared to current.
 | Audio duplicate detection (4.1) | ✅ `audio_hash.rs` — sub-band energy fingerprint via symphonia, `scan_audio_duplicates` Tauri command |
 | Disk growth trends (4.2) | ✅ `growth.rs` — SQLite time-series snapshots, `get_growth_trends` command, Dashboard trend widget |
 | Rule marketplace (4.3) | ✅ `marketplace.rs` — import/export JSON rules from file or URL; Import/Export buttons in Organizer |
-| CLI interface (4.4) | ✅ `cli.rs` — `cleansweep-cli` binary; scan, clean, rules, trends, mft, export-csv sub-commands |
+| CLI interface (4.4) | ✅ `cli.rs` — `Blue Streak-cli` binary; scan, clean, rules, trends, mft, export-csv sub-commands |
 | Network drive & WSL2 (4.5) | ✅ `network.rs` — UNC/WSL2/mapped-drive detection, serial scan with exponential-backoff retry |
 | Notifications & reports (4.6) | ✅ `reports.rs` — CSV export, HTML report (opens in browser), Windows toast notification |
 
@@ -332,9 +332,9 @@ Import/export organizer rules as portable JSON. Import from local file or URL (v
 
 ### 4.4 CLI Interface ✅
 
-`cleansweep-cli` binary shares the same Rust library. Supports `scan`, `clean`, `rules list/run/export/import`, `trends`, `mft`, `export-csv`. Sync wrappers added to `scanner.rs` so CLI doesn't need a Tauri runtime.
+`Blue Streak-cli` binary shares the same Rust library. Supports `scan`, `clean`, `rules list/run/export/import`, `trends`, `mft`, `export-csv`. Sync wrappers added to `scanner.rs` so CLI doesn't need a Tauri runtime.
 
-**File:** `src-tauri/src/cli.rs` (built as `[[bin]] name = "cleansweep-cli"`)
+**File:** `src-tauri/src/cli.rs` (built as `[[bin]] name = "Blue Streak-cli"`)
 
 ### 4.5 Network Drive & WSL2 Support ✅
 

@@ -1,24 +1,24 @@
 [package]
-name = "cleansweep"
+name = "blue-streak"
 version = "0.1.0"
-description = "CleanSweep - Fast file/folder organizer and system maintenance tool"
+description = "Blue Streak - Fast file/folder organizer and system maintenance tool"
 authors = []
 license = ""
 repository = ""
-default-run = "cleansweep"
+default-run = "blue-streak"
 edition = "2021"
 rust-version = "1.85.0"
 
 [lib]
-name = "cleansweep_lib"
+name = "blue_streak_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [[bin]]
-name = "cleansweep"
+name = "blue-streak"
 path = "src/main.rs"
 
 [[bin]]
-name = "cleansweep-cli"
+name = "blue-streak-cli"
 path = "src/cli.rs"
 
 [build-dependencies]

@@ -95,7 +95,7 @@ pub struct RestorePointResult {
 pub fn create_restore_point(description: Option<String>) -> RestorePointResult {
     let desc = description
         .filter(|s| !s.is_empty())
-        .unwrap_or_else(|| "CleanSweep pre-cleanup checkpoint".to_string());
+        .unwrap_or_else(|| "Blue Streak pre-cleanup checkpoint".to_string());
 
     #[cfg(target_os = "windows")]
     {

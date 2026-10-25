@@ -1,4 +1,4 @@
-# CleanSweep — Phase 5: Production Architecture Research
+﻿# Blue Streak — Phase 5: Production Architecture Research
 
 > Deep research on in-memory index design, Tauri state management,
 > incremental scanning, memory layout, and pipeline design.
@@ -58,10 +58,10 @@ Full paths are O(depth) reconstructions from the parent map — done once, cache
 | **Total** | | **~140 MB** |
 
 Compared to:
-- **Current CleanSweep:** ~1 GB (full paths everywhere, multiple structures)
+- **Current Blue Streak:** ~1 GB (full paths everywhere, multiple structures)
 - **Everything (VoidTools):** ~20 MB (minimal, lazy path reconstruction)
 - **WizTree:** ~50–100 MB (names + sizes + refs)
-- **CleanSweep optimized:** ~140 MB ← target
+- **Blue Streak optimized:** ~140 MB ← target
 
 ### 1.3 Secondary Index Structures
 
@@ -481,7 +481,7 @@ pub enum HashResult { Ok([u8; 32]), Locked, TooLarge, Deleted }
 6. **No per-entry metadata** — no size, no timestamps in primary index
    (fetched on-demand via GetFileInformationByHandle by file_ref)
 
-### Can CleanSweep Use Same Tricks?
+### Can Blue Streak Use Same Tricks?
 
 **Partially.** We need size + age for junk detection, so can't go as minimal as Everything.
 But we can:
@@ -495,7 +495,7 @@ But we can:
 
 ## Part 9 — What "Everything" Does That We Can Learn From
 
-| Technique | Everything | CleanSweep Today | Action |
+| Technique | Everything | Blue Streak Today | Action |
 |---|---|---|---|
 | USN journal delta | ✅ Core feature | ✅ Implemented but not applied to index | Wire USN delta into ScanIndex |
 | Short name storage | ✅ 20 MB/1M | ⚠️ Full paths (1 GB) | Store short names, reconstruct |

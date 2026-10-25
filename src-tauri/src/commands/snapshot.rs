@@ -5,12 +5,12 @@
 /// running a full scan (2–60 s depending on filesystem and privileges).
 ///
 /// On startup:
-///   1. Load snapshot from `%LOCALAPPDATA%\cleansweep\scan.bin` (if it exists).
+///   1. Load snapshot from `%LOCALAPPDATA%\blue-streak\scan.bin` (if it exists).
 ///   2. Call `usn_get_changes` to detect what changed since the snapshot was taken.
 ///   3. Apply the USN delta to the restored index.
 ///   4. The index is now current — all views are ready without any filesystem walk.
 ///
-/// Storage path: `%LOCALAPPDATA%\cleansweep\scan.bin`
+/// Storage path: `%LOCALAPPDATA%\blue-streak\scan.bin`
 /// File format: `bincode`-encoded `ScanIndex` struct (compact binary, ~140 MB
 /// for 1M files vs ~1 GB in-memory because strings are arena-packed).
 
@@ -27,14 +27,14 @@ use crate::models::{ScanIndex, SharedScanIndex};
 fn snapshot_path() -> Result<PathBuf, String> {
     let base = dirs::data_local_dir()
         .ok_or_else(|| "Cannot locate %LOCALAPPDATA%".to_string())?;
-    let dir = base.join("cleansweep");
+    let dir = base.join("blue-streak");
     std::fs::create_dir_all(&dir).map_err(|e| e.to_string())?;
     Ok(dir.join("scan.bin"))
 }
 
 // ─── public API ──────────────────────────────────────────────────────────────
 
-/// Save the current `SharedScanIndex` to `%LOCALAPPDATA%\cleansweep\scan.bin`.
+/// Save the current `SharedScanIndex` to `%LOCALAPPDATA%\blue-streak\scan.bin`.
 ///
 /// Called automatically after every successful scan completes.
 /// Returns the number of bytes written on success.

@@ -66,7 +66,7 @@ pub fn open_html_report(
     let html = build_report_html(freed_bytes, &files, &period);
 
     // Write to a temp file
-    let tmp_path = std::env::temp_dir().join("cleansweep_report.html");
+    let tmp_path = std::env::temp_dir().join("blue_streak_report.html");
     std::fs::write(&tmp_path, &html).map_err(|e| e.to_string())?;
 
     // Open in default browser
@@ -131,7 +131,7 @@ fn build_report_html(freed_bytes: u64, files: &[JunkFile], period: &str) -> Stri
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CleanSweep Report</title>
+<title>Blue Streak Report</title>
 <style>
   body {{ font-family: -apple-system, 'Segoe UI', sans-serif; background:#f7f8fa; color:#1f2328; margin:0; padding:0; }}
   .wrap {{ max-width:760px; margin:32px auto; padding:0 16px; }}
@@ -150,7 +150,7 @@ fn build_report_html(freed_bytes: u64, files: &[JunkFile], period: &str) -> Stri
 </head>
 <body>
 <div class="wrap">
-  <h1>CleanSweep Report</h1>
+  <h1>Blue Streak Report</h1>
   <p class="sub">Generated {now} &middot; Period: {period}</p>
 
   <div class="hero">
@@ -174,7 +174,7 @@ fn build_report_html(freed_bytes: u64, files: &[JunkFile], period: &str) -> Stri
     </table>
   </div>
 
-  <footer>Made with CleanSweep</footer>
+  <footer>Made with Blue Streak</footer>
 </div>
 </body>
 </html>"#,
@@ -204,7 +204,7 @@ pub fn notify_cleanup_complete(
     item_count: u64,
     title: Option<String>,
 ) -> Result<(), String> {
-    let title_str = title.unwrap_or_else(|| "CleanSweep".to_string());
+    let title_str = title.unwrap_or_else(|| "Blue Streak".to_string());
     let body = format!(
         "Freed {} across {} item{}.",
         fmt_size(freed_bytes),

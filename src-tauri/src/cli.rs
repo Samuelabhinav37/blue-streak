@@ -1,19 +1,19 @@
-/// CleanSweep CLI — headless interface sharing the same Rust library.
+/// Blue Streak CLI — headless interface sharing the same Rust library.
 ///
 /// Usage:
-///   cleansweep-cli scan   [--temp] [--dups] [--large] [--empty] <path>…
-///   cleansweep-cli clean  [--permanent] <path>…
-///   cleansweep-cli rules  run [--id <id>]
-///   cleansweep-cli rules  export <dest.json>
-///   cleansweep-cli rules  import <src.json>
-///   cleansweep-cli trends [--days <n>] <path>…
-///   cleansweep-cli mft    <drive>
-///   cleansweep-cli export-csv <output.csv> <path>…
+///   blue-streak-cli scan   [--temp] [--dups] [--large] [--empty] <path>…
+///   blue-streak-cli clean  [--permanent] <path>…
+///   blue-streak-cli rules  run [--id <id>]
+///   blue-streak-cli rules  export <dest.json>
+///   blue-streak-cli rules  import <src.json>
+///   blue-streak-cli trends [--days <n>] <path>…
+///   blue-streak-cli mft    <drive>
+///   blue-streak-cli export-csv <output.csv> <path>…
 
 // Re-use library code directly
-use cleansweep_lib::commands::organizer::{get_rules, run_rules, save_rules};
-use cleansweep_lib::commands::scanner::{delete_files_sync, scan_for_junk_sync};
-use cleansweep_lib::models::JunkFile;
+use blue_streak_lib::commands::organizer::{get_rules, run_rules, save_rules};
+use blue_streak_lib::commands::scanner::{delete_files_sync, scan_for_junk_sync};
+use blue_streak_lib::models::JunkFile;
 
 fn main() {
     let args: Vec<String> = std::env::args().collect();
@@ -157,12 +157,12 @@ fn cmd_rules(args: &[String]) -> Result<(), String> {
         }
         "export" => {
             let dest = args.get(1).ok_or("Usage: rules export <dest.json>")?;
-            let count = cleansweep_lib::commands::marketplace::export_rules(vec![], dest.clone())?;
+            let count = blue_streak_lib::commands::marketplace::export_rules(vec![], dest.clone())?;
             println!("Exported {count} rules to {dest}");
         }
         "import" => {
             let src = args.get(1).ok_or("Usage: rules import <src.json>")?;
-            let imported = cleansweep_lib::commands::marketplace::import_rules_from_file(src.clone())?;
+            let imported = blue_streak_lib::commands::marketplace::import_rules_from_file(src.clone())?;
             let mut existing = get_rules()?;
             existing.extend(imported.iter().cloned());
             save_rules(existing)?;
@@ -196,7 +196,7 @@ fn cmd_mft(args: &[String]) -> Result<(), String> {
     let drive = args.first().map(|s| s.trim_end_matches([':', '\\']).to_string())
         .unwrap_or_else(|| "C".to_string());
 
-    let result = cleansweep_lib::commands::mft::scan_mft(drive)?;
+    let result = blue_streak_lib::commands::mft::scan_mft(drive)?;
     println!(
         "MFT scan complete: {} files, {} dirs, {:.1} GB total ({} ms)",
         result.total_files,
@@ -261,10 +261,10 @@ fn fmt_size(bytes: u64) -> String {
 
 fn print_usage() {
     println!(
-r#"CleanSweep CLI
+r#"Blue Streak CLI
 
 USAGE:
-  cleansweep-cli <command> [options]
+  blue-streak-cli <command> [options]
 
 COMMANDS:
   scan         Scan for junk files

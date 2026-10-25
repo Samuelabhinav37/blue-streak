@@ -92,7 +92,7 @@ export default function Organizer() {
 
   const exportAllRules = async () => {
     if (rules.length === 0) return;
-    const dest = await save({ filters: [{ name: "JSON", extensions: ["json"] }], defaultPath: "cleansweep-rules.json" });
+    const dest = await save({ filters: [{ name: "JSON", extensions: ["json"] }], defaultPath: "blue-streak-rules.json" });
     if (!dest) return;
     try {
       const count = await invoke<number>("export_rules", { ruleIds: [], destPath: dest });

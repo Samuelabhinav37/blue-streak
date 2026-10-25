@@ -1,4 +1,4 @@
-# WizTree Architecture Deep-Dive: The "Blueprint First" Pattern
+﻿# WizTree Architecture Deep-Dive: The "Blueprint First" Pattern
 ## Why WizTree Is 100× Faster — And What We're Doing Wrong
 
 > **Executive Summary:** WizTree achieves 1–2 s for 1 M files by reading the NTFS
@@ -229,7 +229,7 @@ Compare to random directory walks which are IOPS-limited:
 ```rust
 fn read_mft_to_temp(drive: &str) -> Result<PathBuf, String> {
     let mut src = open_mft(drive)?;       // I/O READ #1: from volume
-    let tmp = temp_dir().join("cleansweep_mft.bin");
+    let tmp = temp_dir().join("Blue Streak_mft.bin");
     let mut dst = File::create(&tmp)?;
     io::copy(&mut src, &mut dst)?;        // I/O WRITE #2: copy to disk
     Ok(tmp)

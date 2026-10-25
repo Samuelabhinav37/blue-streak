@@ -1,4 +1,4 @@
-# CleanSweep — Advanced Research: World-Class File Organizer
+﻿# Blue Streak — Advanced Research: World-Class File Organizer
 
 > Deep technical research across 8 domains. Every technique is evaluated against the current codebase with a priority rating.
 
@@ -53,7 +53,7 @@ Threshold = 0.60 → loose (heavily modified)
 - LSH theory: Indyk & Motwani (1998) — https://dl.acm.org/doi/10.1145/276698.276876
 - dupeGuru fuzzy mode: https://github.com/arsenetar/dupeguru (`core/engine.py`)
 
-**CleanSweep action:** Phase 2. Add `twox-hash` crate. New scanner category: `NearDuplicate`. UI toggle: "Find exact" vs "Find similar".
+**Blue Streak action:** Phase 2. Add `twox-hash` crate. New scanner category: `NearDuplicate`. UI toggle: "Find exact" vs "Find similar".
 
 ---
 
@@ -77,7 +77,7 @@ distance ≤ 6 bits → 95%+ match
 - SimHash paper: Chum et al. (2006) — https://dl.acm.org/doi/10.1145/1242572.1242592
 - Implementation: https://github.com/1e0nd/simhash
 
-**CleanSweep action:** Phase 2 (optional). Only worthwhile if users have large log/document archives.
+**Blue Streak action:** Phase 2 (optional). Only worthwhile if users have large log/document archives.
 
 ---
 
@@ -112,7 +112,7 @@ distance ≤ 15 → similar (85%)
 - pHash: https://www.phash.org/
 - Rust crate: `image` + manual dHash implementation (no external dep needed)
 
-**CleanSweep action:** **Phase 2 — HIGH PRIORITY.** Add `image = "0.25"` to Cargo.toml. New scan type: "Find similar images". Show pairs side-by-side in UI.
+**Blue Streak action:** **Phase 2 — HIGH PRIORITY.** Add `image = "0.25"` to Cargo.toml. New scan type: "Find similar images". Show pairs side-by-side in UI.
 
 ---
 
@@ -128,7 +128,7 @@ distance ≤ 15 → similar (85%)
 - AcoustID: https://acoustid.org/chromaprint
 - Rust crate: https://github.com/zmb3/chromaprint-rs
 
-**CleanSweep action:** Phase 3+. Lower priority. Only add if users request music library dedup explicitly.
+**Blue Streak action:** Phase 3+. Lower priority. Only add if users request music library dedup explicitly.
 
 ---
 
@@ -185,7 +185,7 @@ CREATE TABLE dir_sizes (
 
 **Crates:** `rusqlite = "0.31"` + `tokio-rusqlite = "0.5"`
 
-**CleanSweep action:** Phase 2. Store at `%LOCALAPPDATA%/cleansweep/cache.db`. Show "Last scanned: X mins ago" in UI. Auto-invalidate if root mtime changed.
+**Blue Streak action:** Phase 2. Store at `%LOCALAPPDATA%/Blue Streak/cache.db`. Show "Last scanned: X mins ago" in UI. Auto-invalidate if root mtime changed.
 
 ---
 
@@ -214,7 +214,7 @@ fn get_changed_since(drive: char, last_usn: i64) -> Vec<PathBuf> {
 - Microsoft NTFS Change Journals: https://learn.microsoft.com/en-us/windows/win32/fileio/change-journals
 - `FSCTL_READ_USN_JOURNAL`: https://learn.microsoft.com/en-us/windows/win32/api/winioctl/ni-winioctl-fsctl_read_usn_journal
 
-**CleanSweep action:** Phase 2 (Windows only). Gate with `#[cfg(target_os = "windows")]`. Fall back to mtime comparison on other platforms.
+**Blue Streak action:** Phase 2 (Windows only). Gate with `#[cfg(target_os = "windows")]`. Fall back to mtime comparison on other platforms.
 
 ---
 
@@ -225,7 +225,7 @@ fn get_changed_since(drive: char, last_usn: i64) -> Vec<PathBuf> {
 | Throughput | 50K ops/s | 1M+ ops/s | 500K ops/s |
 | Memory | ~10 MB | ~100 MB | ~1 MB |
 | Query support | Full SQL | KV only | KV only |
-| Best for | **CleanSweep** | Event logs | Embedded indexes |
+| Best for | **Blue Streak** | Event logs | Embedded indexes |
 
 **Decision: SQLite.** Upgrade to RocksDB only if scan throughput exceeds 100K files/sec.
 
@@ -256,7 +256,7 @@ fn get_changed_since(drive: char, last_usn: i64) -> Vec<PathBuf> {
 
 Source: https://github.com/notify-rs/notify/blob/main/notify/src/windows.rs
 
-**CleanSweep action:** Keep `notify` for ≤500 watched dirs. Add hybrid: if user watches entire C:\ drive, switch to USN journal polling (Phase 2).
+**Blue Streak action:** Keep `notify` for ≤500 watched dirs. Add hybrid: if user watches entire C:\ drive, switch to USN journal polling (Phase 2).
 
 ---
 
@@ -289,7 +289,7 @@ This coalesces events within a 500ms window, groups by path, and emits only the 
 
 **Paper:** Bruls, Huizing, van Wijk (2000) "Squarified Treemaps" — https://www.win.tue.nl/~vanwijk/stm.pdf
 
-**CleanSweep action:** Phase 2. Compute layout in Rust (new Tauri command `compute_treemap`), render in React SVG. Click rectangle → highlight in file list.
+**Blue Streak action:** Phase 2. Compute layout in Rust (new Tauri command `compute_treemap`), render in React SVG. Click rectangle → highlight in file list.
 
 ---
 
@@ -304,7 +304,7 @@ parent_size = sum(child sizes) + leaf_size
 ```
 After first full walk: size lookups are O(1). Update only the O(k) ancestors of changed files on rescan.
 
-**CleanSweep action:** Phase 2. Integrate with `dir_sizes` SQLite table from B.2.
+**Blue Streak action:** Phase 2. Integrate with `dir_sizes` SQLite table from B.2.
 
 ---
 
@@ -332,7 +332,7 @@ for entry in walk {
 
 2× faster for large file counts; O(N) memory instead of O(n).
 
-**CleanSweep action:** Phase 2. Replace sort in scanner with heap for `scan_large` category.
+**Blue Streak action:** Phase 2. Replace sort in scanner with heap for `scan_large` category.
 
 ---
 
@@ -386,7 +386,7 @@ fn idle_seconds() -> u64 {
 }
 ```
 
-**CleanSweep action:** Phase 2. Add `AppSettings` fields: `run_only_when_idle: bool`, `idle_threshold_minutes: u32`, `run_only_on_ac: bool`.
+**Blue Streak action:** Phase 2. Add `AppSettings` fields: `run_only_when_idle: bool`, `idle_threshold_minutes: u32`, `run_only_on_ac: bool`.
 
 ---
 
@@ -427,7 +427,7 @@ fn send_to_recycle_bin(path: &str) -> bool {
 
 Or use the `trash` crate (cross-platform): `trash = "5"`.
 
-**CleanSweep action:** **IMPLEMENT IMMEDIATELY in current sprint.** Change `delete_files` default to recycle bin. Add `permanent: bool` parameter with confirmation gate.
+**Blue Streak action:** **IMPLEMENT IMMEDIATELY in current sprint.** Change `delete_files` default to recycle bin. Add `permanent: bool` parameter with confirmation gate.
 
 Sources:
 - `trash` crate: https://crates.io/crates/trash
@@ -446,7 +446,7 @@ Multi-pass overwrite (DoD 5220.22-M, Gutmann 35-pass) is **ineffective on SSDs**
 
 Source: https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-88r1.pdf
 
-**CleanSweep action:** Do NOT implement multi-pass overwrite. Show info tooltip if users ask: "SSD secure erase requires ATA Secure Erase or BitLocker key deletion."
+**Blue Streak action:** Do NOT implement multi-pass overwrite. Show info tooltip if users ask: "SSD secure erase requires ATA Secure Erase or BitLocker key deletion."
 
 ---
 
@@ -466,7 +466,7 @@ fn create_restore_point(desc: &str) -> Result<(), String> {
 }
 ```
 
-**CleanSweep action:** Phase 2. Add "Create restore point before cleanup" checkbox. Show toast: "Restore point created — revert via System Restore if needed."
+**Blue Streak action:** Phase 2. Add "Create restore point before cleanup" checkbox. Show toast: "Restore point created — revert via System Restore if needed."
 
 ---
 
@@ -483,7 +483,7 @@ Operation { type, original_path, new_path, timestamp }
 
 Implementation: Zustand store with `history: Operation[]` + `currentIndex: number`. Undo calls `restore_from_recycle_bin` Tauri command.
 
-**CleanSweep action:** Phase 2. Requires soft-delete (F.1) to be in place first.
+**Blue Streak action:** Phase 2. Requires soft-delete (F.1) to be in place first.
 
 ---
 
@@ -507,7 +507,7 @@ Only ~20 rows rendered at any time. O(1) re-render cost regardless of list size.
 
 Crate: `react-window = "1.8"` (npm)
 
-**CleanSweep action:** Phase 2. Replace current results list in `Scanner.tsx` with `FixedSizeList`.
+**Blue Streak action:** Phase 2. Replace current results list in `Scanner.tsx` with `FixedSizeList`.
 
 ---
 
@@ -542,7 +542,7 @@ Show partial results as the scan runs, not only at completion. Current `scan-pro
 
 **APFS clone files:** On macOS, `cp --reflink` creates a clone — same data, two inodes, zero extra disk space (copy-on-write). Our dedup scanner would flag them as duplicates. Fix: check `ATTR_FILE_CLONEID` via `getattrlist()` syscall and skip CoW clones.
 
-**CleanSweep action:** Phase 2. Add `#[cfg(target_os = "macos")]` guard in duplicate detector to skip APFS clones.
+**Blue Streak action:** Phase 2. Add `#[cfg(target_os = "macos")]` guard in duplicate detector to skip APFS clones.
 
 ---
 
@@ -561,7 +561,7 @@ fn is_network_path(path: &Path) -> bool {
 }
 ```
 
-**CleanSweep action:** Phase 2. Show "📡 Network drive — scanning serially" badge in UI. Disable parallel walk for network paths.
+**Blue Streak action:** Phase 2. Show "📡 Network drive — scanning serially" badge in UI. Disable parallel walk for network paths.
 
 ---
 
@@ -575,7 +575,7 @@ fn is_wsl_path(path: &str) -> bool {
 }
 ```
 
-**CleanSweep action:** Phase 3. Detect WSL paths, show warning, scan serially.
+**Blue Streak action:** Phase 3. Detect WSL paths, show warning, scan serially.
 
 ---
 

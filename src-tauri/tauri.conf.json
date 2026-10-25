@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "CleanSweep",
+  "productName": "Blue Streak",
   "version": "0.1.0",
-  "identifier": "com.cleansweep.app",
+  "identifier": "com.bluestreak.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
@@ -13,7 +13,7 @@
     "withGlobalTauri": true,
     "windows": [
       {
-        "title": "CleanSweep",
+        "title": "Blue Streak",
         "width": 1200,
         "height": 750,
         "minWidth": 900,

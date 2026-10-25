@@ -302,7 +302,7 @@ pub fn new_shared_cache() -> SharedCache {
 fn cache_db_path() -> PathBuf {
     dirs::data_local_dir()
         .unwrap_or_else(|| PathBuf::from("."))
-        .join("cleansweep")
+        .join("blue-streak")
         .join("cache.db")
 }
 

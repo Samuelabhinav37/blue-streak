@@ -9,7 +9,7 @@ use crate::models::{OrganizerAction, OrganizerRule, RunResult};
 fn rules_path() -> std::path::PathBuf {
     let base = dirs::data_local_dir()
         .unwrap_or_else(|| std::path::PathBuf::from("."));
-    base.join("cleansweep").join("rules.json")
+    base.join("blue-streak").join("rules.json")
 }
 
 fn ensure_dir(path: &Path) {

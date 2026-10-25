@@ -800,7 +800,7 @@ pub fn get_disk_usage(drive: String) -> Result<serde_json::Value, String> {
 // The CLI binary cannot use `#[tauri::command]` async functions directly.
 // These thin wrappers drive the async logic using a minimal tokio runtime.
 
-/// Synchronous version of `scan_for_junk` — for use by cleansweep-cli.
+/// Synchronous version of `scan_for_junk` — for use by blue-streak-cli.
 /// Does not emit Tauri events (there is no AppHandle in CLI context).
 pub fn scan_for_junk_sync(
     paths: Vec<String>,
@@ -933,7 +933,7 @@ pub fn scan_for_junk_sync(
     Ok(results)
 }
 
-/// Synchronous version of `delete_files` — for use by cleansweep-cli.
+/// Synchronous version of `delete_files` — for use by blue-streak-cli.
 pub fn delete_files_sync(
     paths: Vec<String>,
     permanent: bool,

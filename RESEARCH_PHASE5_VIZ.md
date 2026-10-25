@@ -1,4 +1,4 @@
-# CleanSweep — Phase 5: Visualization & UX Architecture
+﻿# Blue Streak — Phase 5: Visualization & UX Architecture
 
 > Research on treemap rendering, interaction patterns, and performance.
 > Covers what WizTree does that we don't — specifically for DiskMap.

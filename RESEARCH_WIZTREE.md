@@ -1,6 +1,6 @@
-# WizTree — How It Works (Technical Deep-Dive)
+﻿# WizTree — How It Works (Technical Deep-Dive)
 
-> Research for the CleanSweep performance rewrite.
+> Research for the Blue Streak performance rewrite.
 > Goal: understand exactly why WizTree scans a 1 TB drive in 1–2 seconds
 > and why our current `jwalk`-based scanner takes 10+ minutes.
 
@@ -170,8 +170,8 @@ The rewrite plan:
 | **WizTree** | `FSCTL_ENUM_USN_RECORDS` + size batch | **~1–2s** | Yes |
 | TreeSize Pro | `NtQueryDirectoryFile` | ~10–30s | No |
 | WinDirStat | `FindFirstFile` | ~2–5 min | No |
-| **CleanSweep (current)** | `jwalk` → `FindFirstFile` | **~10 min** | No |
-| **CleanSweep (target)** | MFT enumeration + parallel stat | **~2–5s** | Yes (fallback: 30s) |
+| **Blue Streak (current)** | `jwalk` → `FindFirstFile` | **~10 min** | No |
+| **Blue Streak (target)** | MFT enumeration + parallel stat | **~2–5s** | Yes (fallback: 30s) |
 
 ---
 
@@ -187,12 +187,12 @@ because:
 TreeSize uses this and achieves ~10–30s. Still not WizTree speed because it's still
 per-directory, not per-volume-in-one-pass.
 
-For CleanSweep, this is a good **no-admin fallback**: replace `jwalk` with
+For Blue Streak, this is a good **no-admin fallback**: replace `jwalk` with
 `NtQueryDirectoryFile` and get ~3–10× speedup without requiring elevation.
 
 ---
 
-## Implementation Plan for CleanSweep
+## Implementation Plan for Blue Streak
 
 ### Path A: Admin path (WizTree speed)
 1. Try `FSCTL_ENUM_USN_RECORDS` on `\\.\C:`

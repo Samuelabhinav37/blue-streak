@@ -1,5 +1,5 @@
 /// Windows NTFS USN Change Journal integration.
-/// Lets CleanSweep ask: "what files changed since my last scan?"
+/// Lets Blue Streak ask: "what files changed since my last scan?"
 /// instead of re-walking the entire directory tree.
 ///
 /// On non-Windows platforms this module exposes the same public surface

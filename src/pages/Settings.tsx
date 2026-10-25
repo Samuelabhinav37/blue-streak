@@ -113,7 +113,7 @@ export default function Settings() {
         <section className="bg-surface-800 border border-surface-600 rounded-xl p-5 space-y-3">
           <h2 className="text-sm font-semibold text-white">Startup</h2>
           <label className="flex items-center justify-between">
-            <span className="text-sm text-slate-300">Launch CleanSweep on login</span>
+            <span className="text-sm text-slate-300">Launch Blue Streak on login</span>
             <input
               type="checkbox"
               checked={form.autoStart}

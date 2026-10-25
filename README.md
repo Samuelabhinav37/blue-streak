@@ -1,8 +1,8 @@
 ﻿<p align="center">
-  <img src="src-tauri/icons/128x128.png" width="80" alt="CleanSweep icon" />
+  <img src="src-tauri/icons/128x128.png" width="80" alt="Blue Streak icon" />
 </p>
 
-<h1 align="center">CleanSweep</h1>
+<h1 align="center">Blue Streak</h1>
 
 <p align="center">
   A fast, Windows-native disk analyzer and file organizer<br/>
@@ -20,7 +20,7 @@
 
 ## What it does
 
-CleanSweep finds and removes the files you forgot you had — old downloads, duplicate photos, leftover temp files, large backups that never got cleaned up — and shows you exactly where every gigabyte on your drive went.
+Blue Streak finds and removes the files you forgot you had — old downloads, duplicate photos, leftover temp files, large backups that never got cleaned up — and shows you exactly where every gigabyte on your drive went.
 
 | Feature | Detail |
 |---|---|
@@ -33,16 +33,16 @@ CleanSweep finds and removes the files you forgot you had — old downloads, dup
 | **File Organizer** | Rule engine: move/copy/archive by extension, size, age, regex |
 | **Watcher** | Real-time folder monitor with event log |
 | **Scheduler** | Windows Task Scheduler integration — scan on login, daily, or weekly |
-| **CLI** | `cleansweep-cli` — scriptable scan, clean, rules, trends, MFT export |
+| **CLI** | `Blue Streak-cli` — scriptable scan, clean, rules, trends, MFT export |
 
 ---
 
 ## Why it is fast
 
-CleanSweep is designed around a single idea: **read the filesystem once, query it forever**.
+Blue Streak is designed around a single idea: **read the filesystem once, query it forever**.
 
 ### NTFS MFT direct scan (admin)
-Instead of calling `FindFirstFile` / `FindNextFile` for every directory, CleanSweep reads the raw NTFS `$MFT` directly — one sequential I/O pass that returns every file and directory on the volume in 2–5 seconds, regardless of how many files there are.
+Instead of calling `FindFirstFile` / `FindNextFile` for every directory, Blue Streak reads the raw NTFS `$MFT` directly — one sequential I/O pass that returns every file and directory on the volume in 2–5 seconds, regardless of how many files there are.
 
 ```
 FindFirstFile walk  ~1M files  →  30–60 s
@@ -60,7 +60,7 @@ Duplicate scan after scan    →  < 500 ms   (was 30–60 s)
 ```
 
 ### Snapshot + USN delta
-After a scan, `ScanIndex` is serialised to `%LOCALAPPDATA%\cleansweep\scan.bin` using `bincode`. On the next app launch:
+After a scan, `ScanIndex` is serialised to `%LOCALAPPDATA%\Blue Streak\scan.bin` using `bincode`. On the next app launch:
 
 1. Load snapshot (< 200 ms for 1 M files)
 2. Call `FSCTL_READ_USN_JOURNAL` to get every file that changed since the snapshot
@@ -94,7 +94,7 @@ RAM for 1 M files:  ~1 GB (PathBuf)  →  ~140 MB (arena)   (7× less)
 ## Architecture
 
 ```
-cleansweep/
+Blue Streak/
 ├── src/                         # React 18 + TypeScript frontend
 │   ├── pages/
 │   │   ├── Scanner.tsx          # Junk scan, virtual list (react-window), undo/redo
@@ -113,7 +113,7 @@ cleansweep/
     └── src/
         ├── models.rs            # ScanIndex, IndexEntry, NameArena, SharedScanIndex
         ├── lib.rs               # Tauri state registration + command handler list
-        ├── cli.rs               # cleansweep-cli binary
+        ├── cli.rs               # Blue Streak-cli binary
         └── commands/
             ├── scanner.rs       # scan_for_junk, delete_files, 3-pass dedup, PathArena
             ├── mft.rs           # NTFS $MFT direct scan (WizTree-style)
@@ -149,8 +149,8 @@ cleansweep/
 ### Install & run
 
 ```powershell
-git clone https://github.com/Samuelabhinav37/cleansweep.git
-cd cleansweep
+git clone https://github.com/Samuelabhinav37/Blue Streak.git
+cd Blue Streak
 npm install
 npm run tauri dev
 ```
@@ -159,19 +159,19 @@ npm run tauri dev
 
 ```powershell
 npm run tauri build
-# Installer: src-tauri/target/release/bundle/nsis/CleanSweep_0.1.0_x64-setup.exe
+# Installer: src-tauri/target/release/bundle/nsis/Blue Streak_0.1.0_x64-setup.exe
 ```
 
 ### CLI
 
-The `cleansweep-cli` binary is built alongside the main app:
+The `Blue Streak-cli` binary is built alongside the main app:
 
 ```powershell
 # After `cargo build` in src-tauri/
-.\src-tauri\target\debug\cleansweep-cli.exe --help
+.\src-tauri\target\debug\Blue Streak-cli.exe --help
 
 USAGE:
-    cleansweep-cli <COMMAND>
+    Blue Streak-cli <COMMAND>
 
 COMMANDS:
     scan          Scan for junk files

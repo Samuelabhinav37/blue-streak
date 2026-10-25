@@ -151,7 +151,7 @@ export default function Scanner() {
 
   const exportCsv = async () => {
     if (scanResults.length === 0) return;
-    const dest = await save({ filters: [{ name: "CSV", extensions: ["csv"] }], defaultPath: "cleansweep-results.csv" });
+    const dest = await save({ filters: [{ name: "CSV", extensions: ["csv"] }], defaultPath: "blue-streak-results.csv" });
     if (!dest) return;
     try {
       const count = await invoke<number>("export_scan_csv", { files: scanResults, destPath: dest });
