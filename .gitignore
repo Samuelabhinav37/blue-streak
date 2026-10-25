@@ -1,0 +1,33 @@
+# Node.js / frontend
+node_modules/
+dist/
+.vite/
+
+# Rust / Tauri backend
+src-tauri/target/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+
+# Tauri generated schemas (regenerated on build)
+src-tauri/gen/schemas/
+
+# Build artifacts
+*.pdb
+*.d
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.local
+
+# Runtime-generated files
+scan.bin
+cleansweep_mft.bin
